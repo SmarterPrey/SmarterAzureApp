@@ -100,3 +100,4 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
 
   ]
 }
+}
