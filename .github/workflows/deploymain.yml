@@ -25,7 +25,7 @@ jobs:
     - name: deploy
       uses: azure/arm-deploy@v1
       with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./InfrastructureCode/main.bicep
         parameters: 'storagePrefix=stortestbicep storageSKU=Standard_LRS'
