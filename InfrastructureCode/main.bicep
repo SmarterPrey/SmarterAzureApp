@@ -33,13 +33,6 @@ resource stg 'Microsoft.Storage/storageAccounts@2021-04-01' = {
 
 output storageEndpoint object = stg.properties.primaryEndpoints
 
-// create a container
-resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
-  resource blobStorage 'Microsoft.Storage/storageAccounts/blobServices@2021-04-01' = {
-    parent: stg
-    name: 'default'
-  }
-
 //Create blob storage
 resource blobStorage 'Microsoft.Storage/storageAccounts/blobServices@2021-04-01' = {
   parent: stg
@@ -71,6 +64,12 @@ resource blobStorage 'Microsoft.Storage/storageAccounts/blobServices@2021-04-01'
   }
 }
 
+// create a container
+resource container 'Microsoft.Storage/storageAccounts/blobServices/containers@2021-04-01' = {
+  name: 'mycontainer'
+  parent: blobStorage
+}
+
 // create an app service plan
 resource appServicePlan 'Microsoft.Web/serverfarms@2021-01-15' = {
   name: 'myappserviceplan'
@@ -91,7 +90,7 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
       appSettings: [
         {
           name: 'WEBSITE_RUN_FROM_PACKAGE'
-          value: stg.blob
+          value: null
         }
       ]
     }
@@ -99,5 +98,4 @@ resource appService 'Microsoft.Web/sites@2021-01-15' = {
   dependsOn: [
 
   ]
-}
 }
